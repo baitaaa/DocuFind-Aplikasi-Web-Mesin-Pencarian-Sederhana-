@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}DocuFind{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/"> <span class="brand-mark">D</span> DocuFind <span class="brand-sub">Academic Search</span></a>
+    <nav><a href="/">Dashboard</a><a href="/documents">Dokumen</a></nav>
+  </header>
+  <main class="container">{% block content %}{% endblock %}</main>
+  <footer>DocuFind · TF-IDF + Vector Space Model · Metadata dari OpenAlex</footer>
+</body></html>

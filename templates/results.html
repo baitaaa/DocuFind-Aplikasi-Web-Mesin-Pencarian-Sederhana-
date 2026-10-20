@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Hasil Pencarian — DocuFind{% endblock %}
+{% block content %}
+<section class="results-head">
+  <div class="eyebrow">SEARCH RESULTS</div><h1>Hasil pencarian</h1>
+  <form class="searchbar compact" action="/search" method="post"><span class="search-icon">⌕</span><input name="query" value="{{ query }}" required><button type="submit">Cari ↗</button></form>
+  {% if query %}<p class="muted">Kueri: <strong>{{ query }}</strong> · {{ results|length }} hasil ditampilkan dari {{ doc_count }} dokumen terindeks.</p>{% endif %}
+</section>
+{% if error %}<div class="notice">{{ error }}</div>{% endif %}
+{% if terms %}<div class="term-row"><span>Term setelah preprocessing:</span>{% for term in terms %}<span class="term">{{ term }}</span>{% endfor %}</div>{% endif %}
+{% if results %}
+<div class="results-list">
+{% for d in results %}
+  <article class="result-card">
+    <div class="rank">#{{ loop.index }}</div><div class="result-body">
+      <div class="result-meta">{{ d.year or "Tahun tidak tersedia" }}{% if d.venue %} · {{ d.venue }}{% endif %}</div>
+      <h2><a href="{{ d.url }}" target="_blank" rel="noopener">{{ d.title }}</a></h2>
+     <p>{{ (d.abstract or "Abstrak tidak tersedia pada metadata publikasi.")[:650] }}{% if d.abstract and d.abstract|length > 650 %}…{% endif %}</p>
+      {% if d.matched_terms %}<div class="term-row small-terms">{% for term in d.matched_terms %}<span class="term">{{ term }}</span>{% endfor %}</div>{% endif %}
+      
+<div class="result-foot">
+    <span>Cosine similarity</span>
+    <strong>{{ "%.4f"|format(d.score) }}</strong>
+    <a href="{{ d.url }}" target="_blank" rel="noopener">Buka paper ↗</a>
+</div>
+
+    </div>
+  </article>
+{% endfor %}
+</div>
+{% elif not error %}
+<div class="empty">
+  <div class="empty-icon">⌕</div>
+  <h2>Belum ada hasil yang cocok</h2>
+  <p>Coba gunakan kata kunci lain atau kata kunci yang lebih umum.</p>
+  <a class="button-link" href="/">Kembali ke dashboard</a>
+</div>
+{% endif %}
+{% endblock %}

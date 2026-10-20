@@ -1,0 +1,80 @@
+
+{% extends "base.html" %}
+{% block title %}DocuFind — Dashboard Pencarian{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="eyebrow">ACADEMIC DISCOVERY</div>
+
+  <h1>Temukan literatur,<br><span>lebih terarah.</span></h1>
+
+  <p>
+    Mesin pencari dokumen akademik dengan preprocessing teks,
+    pembobotan TF-IDF, dan pemeringkatan cosine similarity berbasis VSM.
+  </p>
+
+  <form class="searchbar" action="/search" method="post">
+    <span class="search-icon">⌕</span>
+    <input
+      name="query"
+      placeholder="Contoh: artificial intelligence in education"
+      required
+    >
+    <button type="submit">Cari dokumen ↗</button>
+  </form>
+
+  <div class="hint">
+    Cari dokumen akademik berdasarkan kata kunci menggunakan korpus lokal.
+  </div>
+</section>
+
+{% if message %}
+<div class="notice">{{ message }}</div>
+{% endif %}
+
+<section class="stats">
+  <div class="stat">
+    <span>Dokumen terindeks</span>
+    <strong>{{ doc_count }}</strong>
+    <small>Target tugas: 1.000 dokumen</small>
+  </div>
+
+  <div class="stat">
+    <span>Metode ranking</span>
+    <strong>TF-IDF</strong>
+    <small>Term Frequency × Inverse Document Frequency</small>
+  </div>
+
+  <div class="stat">
+    <span>Model pencarian</span>
+    <strong>VSM</strong>
+    <small>Cosine similarity untuk relevansi</small>
+  </div>
+</section>
+
+<section class="feature-grid">
+  <article class="feature">
+    <div class="feature-num">01</div>
+    <h3>Preprocessing pipeline</h3>
+    <p>
+      Normalisasi huruf, tokenisasi, dan penyaringan stopword sederhana.
+    </p>
+  </article>
+
+  <article class="feature">
+    <div class="feature-num">02</div>
+    <h3>Backend VSM</h3>
+    <p>
+      TF-IDF berbobot log dan cosine similarity untuk menghitung skor.
+    </p>
+  </article>
+
+  <article class="feature">
+    <div class="feature-num">03</div>
+    <h3>Hasil berperingkat</h3>
+    <p>
+      Urutan dokumen berdasarkan skor kemiripan, dari tertinggi ke terendah.
+    </p>
+  </article>
+</section>
+{% endblock %}

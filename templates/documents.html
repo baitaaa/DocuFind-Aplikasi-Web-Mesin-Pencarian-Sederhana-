@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Korpus Dokumen — DocuFind{% endblock %}
+{% block content %}
+<section class="results-head"><div class="eyebrow">LOCAL CORPUS</div><h1>Dokumen terindeks</h1><p class="muted">{{ doc_count }} dokumen tersimpan pada korpus lokal.</p></section>
+{% if docs %}
+<div class="results-list">
+{% for d in docs %}
+<article class="result-card"><div class="rank">#{{ loop.index }}</div><div class="result-body"><div class="result-meta">{{ d.year or "Tahun tidak tersedia" }}{% if d.venue %} · {{ d.venue }}{% endif %}</div><h2><a href="{{ d.url }}" target="_blank" rel="noopener">{{ d.title }}</a></h2><div class="authors">{{ d.author_names or "Penulis tidak tersedia" }}</div><p>{{ (d.abstract or "Abstrak tidak tersedia.")[:300] }}{% if d.abstract and d.abstract|length > 300 %}…{% endif %}</p></div></article>
+{% endfor %}
+</div>
+{% else %}
+<div class="empty"><h2>Korpus masih kosong</h2><p>Impor hingga 1.000 dokumen akademik dari OpenAlex melalui dashboard.</p><a class="button-link" href="/">Ke dashboard</a></div>
+{% endif %}
+{% endblock %}
